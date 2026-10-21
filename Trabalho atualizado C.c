@@ -1,7 +1,8 @@
 #include <stdio.h>
 
 int main() {
-    int v[100], numero, i, j, menor, temp, opcao, metodo, pos, novo;
+    int v[100], aux[100], numero, i, j, menor, temp, opcao, metodo, pos, novo;
+    int tam, ini, meio, fim, k, a, b;
     FILE *arq;
 
     do {
@@ -56,6 +57,7 @@ int main() {
             printf("\n1 - Bubble Sort");
             printf("\n2 - Insertion Sort");
             printf("\n3 - Selection Sort");
+            printf("\n4 - Merge Sort");
             printf("\nEscolha: ");
             scanf("%d", &metodo);
 
@@ -96,6 +98,50 @@ int main() {
                         temp = v[i];
                         v[i] = v[menor];
                         v[menor] = temp;
+                    }
+                }
+            }
+            else if (metodo == 4) {
+                /* Merge Sort */
+                for (tam = 1; tam < numero; tam *= 2) {
+                    for (ini = 0; ini < numero - tam; ini += 2 * tam) {
+                        meio = ini + tam - 1;
+                        fim = ini + 2 * tam - 1;
+                        if (fim > numero - 1) {
+                            fim = numero - 1;
+                        }
+
+                        a = ini;
+                        b = meio + 1;
+                        k = ini;
+
+                        while (a <= meio && b <= fim) {
+                            if (v[a] <= v[b]) {
+                                aux[k] = v[a];
+                                a++;
+                            }
+                            else {
+                                aux[k] = v[b];
+                                b++;
+                            }
+                            k++;
+                        }
+
+                        while (a <= meio) {
+                            aux[k] = v[a];
+                            a++;
+                            k++;
+                        }
+
+                        while (b <= fim) {
+                            aux[k] = v[b];
+                            b++;
+                            k++;
+                        }
+
+                        for (k = ini; k <= fim; k++) {
+                            v[k] = aux[k];
+                        }
                     }
                 }
             }
