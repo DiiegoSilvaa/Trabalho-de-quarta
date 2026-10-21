@@ -1,5 +1,7 @@
 # Trabalho-de-quarta
 
+muita aura farmada fazendo esse trabalho
+
 ## integrantes:
 
 - Diego Silva | RGM: 47855533
