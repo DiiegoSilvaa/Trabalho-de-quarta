@@ -1,11 +1,40 @@
 #include <stdio.h>
 
+void quickSort(int v[], int inicio, int fim) {
+    int i = inicio, j = fim, pivo, temp;
+
+    pivo = v[(inicio + fim) / 2];
+
+    while (i <= j) {
+        while (v[i] < pivo)
+            i++;
+        while (v[j] > pivo)
+            j--;
+        if (i <= j) {
+            temp = v[i];
+            v[i] = v[j];
+            v[j] = temp;
+            i++;
+            j--;
+        }
+    }
+
+    if (inicio < j)
+        quickSort(v, inicio, j);
+    if (i < fim)
+        quickSort(v, i, fim);
+}
+
 int main() {
+
     int v[100], aux[100], numero, i, j, menor, temp, opcao, metodo, pos, novo;
+
     int tam, ini, meio, fim, k, a, b;
+
     FILE *arq;
 
     do {
+
         printf("\n1 - Criar arquivo");
         printf("\n2 - Ordenar numeros");
         printf("\n3 - Alterar valor");
@@ -14,6 +43,7 @@ int main() {
         scanf("%d", &opcao);
 
         if (opcao == 1) {
+
             printf("Quantidade de numeros (maximo 100): ");
             scanf("%d", &numero);
 
@@ -40,6 +70,7 @@ int main() {
         }
 
         else if (opcao == 2) {
+
             arq = fopen("dados.txt", "r");
 
             if (arq == NULL) {
@@ -58,10 +89,12 @@ int main() {
             printf("\n2 - Insertion Sort");
             printf("\n3 - Selection Sort");
             printf("\n4 - Merge Sort");
+            printf("\n5 - Quick Sort");
             printf("\nEscolha: ");
             scanf("%d", &metodo);
 
             if (metodo == 1) {
+
                 for (i = 0; i < numero - 1; i++) {
                     for (j = 0; j < numero - i - 1; j++) {
                         if (v[j] > v[j + 1]) {
@@ -72,7 +105,9 @@ int main() {
                     }
                 }
             }
+
             else if (metodo == 2) {
+
                 for (i = 1; i < numero; i++) {
                     temp = v[i];
                     j = i - 1;
@@ -85,15 +120,19 @@ int main() {
                     v[j + 1] = temp;
                 }
             }
+
             else if (metodo == 3) {
                 /* Selection Sort */
+
                 for (i = 0; i < numero - 1; i++) {
                     menor = i;
+
                     for (j = i + 1; j < numero; j++) {
                         if (v[j] < v[menor]) {
                             menor = j;
                         }
                     }
+
                     if (menor != i) {
                         temp = v[i];
                         v[i] = v[menor];
@@ -101,12 +140,16 @@ int main() {
                     }
                 }
             }
+
             else if (metodo == 4) {
                 /* Merge Sort */
+
                 for (tam = 1; tam < numero; tam *= 2) {
                     for (ini = 0; ini < numero - tam; ini += 2 * tam) {
+
                         meio = ini + tam - 1;
                         fim = ini + 2 * tam - 1;
+
                         if (fim > numero - 1) {
                             fim = numero - 1;
                         }
@@ -145,6 +188,12 @@ int main() {
                     }
                 }
             }
+
+            else if (metodo == 5) {
+                /* Quick Sort */
+                quickSort(v, 0, numero - 1);
+            }
+
             else {
                 printf("Metodo invalido!\n");
                 continue;
@@ -167,6 +216,7 @@ int main() {
         }
 
         else if (opcao == 3) {
+
             arq = fopen("dados.txt", "r");
 
             if (arq == NULL) {
@@ -190,6 +240,7 @@ int main() {
 
             printf("Novo valor: ");
             scanf("%d", &novo);
+
             v[pos - 1] = novo;
 
             arq = fopen("dados.txt", "w");
